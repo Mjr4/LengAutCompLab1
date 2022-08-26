@@ -1,5 +1,5 @@
-# Laboratorio 1 de Lenguajes y automatas
-Si no te sale la interfaz necesitas instalar la libreria tkinter para python
+# Laboratorio
+Es necesario tener la libreria tkinter de python
 ```
 pip install tkinter
 ```

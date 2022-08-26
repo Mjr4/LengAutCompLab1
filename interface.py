@@ -3,7 +3,7 @@ from operations import validate
 
 # Configurations
 root = Tk()
-root.title("Laboratorio #1. Martin Vega, Tomas Strandgard")
+root.title("Laboratorio")
 root.geometry("600x300")
 #Vars
 val_rest1 = StringVar()
