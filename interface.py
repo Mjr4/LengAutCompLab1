@@ -59,6 +59,8 @@ Lb_Result2.pack(expand=True)
 
 BtmValidate.pack(side='bottom')
 
+######################################################################
+
 # Mapea los resultados y regresa string
 def map_result(val):
 
