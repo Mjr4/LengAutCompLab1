@@ -1,6 +1,6 @@
 
 def conv_alph_to_list(str_alphabet=''):
-    list_alphabet = str_alphabet.split(',')
+    list_alphabet=str_alphabet.replace(' ','').split(',')
     return list_alphabet
 
 def validate(alph='', ent1='', ent2=''):
@@ -25,7 +25,7 @@ def validate(alph='', ent1='', ent2=''):
     return ValidationList
 
 def main():
-    print(validate('a,b,c', 'aaaaaaaa', 'abbb', 'axc'))
+    print(validate('a,b ,c, , x, a ', 'abbb', 'axc'))
 
 if __name__ == '__main__':
     main()

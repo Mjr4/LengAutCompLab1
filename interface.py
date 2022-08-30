@@ -63,7 +63,6 @@ BtmValidate.pack(side='bottom')
 
 # Mapea los resultados y regresa string
 def map_result(val):
-
     if val == 1:
         return 'Correcto' 
     else: 
@@ -88,7 +87,7 @@ def alphabet_isNot_empty(text=''):
     
 def check_inputs():
     # Se obtienen los datos de los inputs
-    alphabet = Ent_Alph_Imp.get().strip()
+    alphabet = Ent_Alph_Imp.get()
     Ent1 = Ent_Val1.get().strip()
     Ent2 = Ent_Val2.get().strip()
 
