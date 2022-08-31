@@ -15,8 +15,11 @@ StrV_ent2 = StringVar()
 alphabey = StringVar()
 alphabey.set(','.join(ALPHABET))
 StrV_ConcRuslt = StringVar()
-
+StrVval1Exp = StringVar()
+StrVval2Exp = StringVar()
 conc_Opt = IntVar()
+
+
 # Components
 Lb_Title = Label(root, text="Cadenas y simbolos", font='Tahoma, 16')
 Fr_Alph_Inp = Frame(root)
@@ -40,16 +43,27 @@ Lb_lenMsg = Label(Fr_len, text='Caracteres')
 Lb_len_rest1 = Label(Fr_len, textvariable=StrV_ent1)
 Lb_len_rest2 = Label(Fr_len, textvariable=StrV_ent2)
 
+BtmValidate = Button(Fr_Val,text='Validar')
+
 Fr_Conc = Frame(root)
-Rb_ab = Radiobutton(Fr_Conc, text='AB',variable=conc_Opt, value=0)
-Rb_ba = Radiobutton(Fr_Conc, text='BA',variable=conc_Opt, value=1)
-Rb_alb = Radiobutton(Fr_Conc, text='AlB',variable=conc_Opt, value=2)
-Rb_bla = Radiobutton(Fr_Conc, text='BlA',variable=conc_Opt, value=3)
-Btm_Conc = Button(Fr_Conc, text='Concatenar')
+Fr_ConctImpt = Frame(Fr_Conc)
+Rb_ab = Radiobutton(Fr_ConctImpt, text='AB',variable=conc_Opt, value=0)
+Rb_ba = Radiobutton(Fr_ConctImpt, text='BA',variable=conc_Opt, value=1)
+Rb_alb = Radiobutton(Fr_ConctImpt, text='AlB',variable=conc_Opt, value=2)
+Rb_bla = Radiobutton(Fr_ConctImpt, text='BlA',variable=conc_Opt, value=3)
+Btm_Conc = Button(Fr_ConctImpt, text='Concatenar')
 
-Lb_conctResult = Label(root, textvariable=StrV_ConcRuslt)
+Lb_conctResult = Label(Fr_Conc, textvariable=StrV_ConcRuslt)
 
-BtmValidate = Button(root,text='Validar')
+Fr_CalcExp = Frame(root)
+Fr_CalcExpInp = Frame(Fr_CalcExp)
+Lb_ExpMesag = Label(Fr_CalcExpInp, text='Introduce un exponente para calcular la potencia')
+Ent_Exp = Entry(Fr_CalcExpInp)
+Btm_CalcExp = Button(Fr_CalcExpInp, text='Calcular')
+
+Lb_Val1Exp = Label(Fr_CalcExp, textvariable=StrVval1Exp)
+Lb_Val2Exp = Label(Fr_CalcExp, textvariable=StrVval2Exp)
+
 
 # Components ubication
 Lb_Title.pack()
@@ -74,6 +88,8 @@ Lb_Result1.pack(expand=True)
 Lb_Result2.pack(expand=True)
 
 Fr_Conc.pack()
+
+Fr_ConctImpt.pack()
 Rb_ab.pack(side='left')
 Rb_ba.pack(side='left')
 Rb_alb.pack(side='left')
@@ -81,8 +97,16 @@ Rb_bla.pack(side='left')
 Btm_Conc.pack(side='left')
 
 Lb_conctResult.pack()
-BtmValidate.pack(side='bottom')
+BtmValidate.pack()
 
+Fr_CalcExp.pack()
+Fr_CalcExpInp.pack()
+Lb_ExpMesag.pack(side='left')
+Ent_Exp.pack(side='left')
+Btm_CalcExp.pack(side='left')
+
+Lb_Val1Exp.pack()
+Lb_Val2Exp.pack()
 ######################################################################
 
 # Mapea los resultados y regresa string
@@ -125,7 +149,6 @@ def check_inputs():
     else:
         messagebox.showwarning('Aviso', 'Introduce cadenas válidas')        
 
-
 def conc_result():
     # Obtener la opcion de concatenar
     concResult = ''
@@ -139,9 +162,14 @@ def conc_result():
     }
     StrV_ConcRuslt.set(operation.get(conc_Opt.get()))
 
+def exp_result():
+    exp = int(Ent_Exp.get())
+    StrVval1Exp.set(Ent_Val1.get()*exp)
+    StrVval2Exp.set(Ent_Val2.get()*exp)
 
 BtmValidate.config(command=check_inputs)
 Btm_Conc.config(command=conc_result)
+Btm_CalcExp.config(command=exp_result)
 root.mainloop()
 
 
