@@ -1,11 +1,6 @@
+ALPHABET = ['a','b','c']
 
-def conv_alph_to_list(str_alphabet=''):
-    list_alphabet=str_alphabet.replace(' ','').split(',')
-    return list_alphabet
-
-def validate(alph='', ent1='', ent2=''):
-    # Convierte el alfabeto a una lista
-    alphabet = conv_alph_to_list(alph)
+def validate(ent1='', ent2=''):
     # Crear una lista con las entradas a validar
     list_of_validates = [ent1, ent2]
     ValidationList = []
@@ -16,7 +11,7 @@ def validate(alph='', ent1='', ent2=''):
         for character in entries:
             # Si encuentra que un caracter no pertence al alfabeto
             # Cambia la variable isValid y rompe el ciclo
-            if character not in alphabet:
+            if character not in ALPHABET:
                 isValid = False
                 break
         # Añade a una lista de validaciones los resultados True o False (0,1)
@@ -25,7 +20,7 @@ def validate(alph='', ent1='', ent2=''):
     return ValidationList
 
 def main():
-    print(validate('a,b ,c, , x, a ', 'abbb', 'axc'))
+    print(validate('', ''))
 
 if __name__ == '__main__':
     main()

@@ -1,5 +1,5 @@
 from tkinter import *
-from operations import validate
+from operations import validate, ALPHABET
 
 # Configurations
 root = Tk()
@@ -8,30 +8,32 @@ root.geometry("600x300")
 #Vars
 val_rest1 = StringVar()
 val_rest2 = StringVar()
-len_ent1 = StringVar()
-len_ent2 = StringVar()
-
+StrV_ent1 = StringVar()
+StrV_ent2 = StringVar()
+alphabey = StringVar()
+alphabey.set(','.join(ALPHABET))
 # Components
 Lb_Title = Label(root, text="Cadenas y simbolos", font='Tahoma, 16')
-Fr_Alph_Inp = Frame(root, bg='Yellow')
+Fr_Alph_Inp = Frame(root)
 Lb_Alph_Inp = Label(Fr_Alph_Inp, text="Introduce un alfabeto (sepado por comas)")
-Ent_Alph_Imp = Entry(Fr_Alph_Inp)
+Ent_Alph_Imp = Entry(Fr_Alph_Inp, state='disabled', textvariable=alphabey)
 
-Fr_Val = Frame(root, bg='Green')
-Fr_Inp = Frame(Fr_Val, bg='Red')
+
+Fr_Val = Frame(root)
+Fr_Inp = Frame(Fr_Val)
 Lb_ValInpMsg = Label(Fr_Inp, text='Introduce los textos a verificar')
 Ent_Val1 = Entry(Fr_Inp)
 Ent_Val2 = Entry(Fr_Inp)
 
-Fr_Outp = Frame(Fr_Val, bg='Blue')
+Fr_Outp = Frame(Fr_Val)
 Lb_ValMsg = Label(Fr_Outp, text='Validacion')
 Lb_Result1 = Label(Fr_Outp, textvariable=val_rest1)
 Lb_Result2 = Label(Fr_Outp, textvariable=val_rest2)
 
-Fr_len = Frame(Fr_Val, bg='Purple')
+Fr_len = Frame(Fr_Val)
 Lb_lenMsg = Label(Fr_len, text='Caracteres')
-Lb_len_rest1 = Label(Fr_len, textvariable=len_ent1)
-Lb_len_rest2 = Label(Fr_len, textvariable=len_ent2)
+Lb_len_rest1 = Label(Fr_len, textvariable=StrV_ent1)
+Lb_len_rest2 = Label(Fr_len, textvariable=StrV_ent2)
 
 BtmValidate = Button(root,text='Validar')
 
@@ -67,39 +69,39 @@ def map_result(val):
         return 'Correcto' 
     else: 
         return 'Incorrecto'
-    
+
 # Coloca la longitud de la cadena
 def set_len(ent1, ent2):
-    len_ent1.set(len(ent1))
-    len_ent2.set(len(ent2))
+    StrV_ent1.set(ent1)
+    StrV_ent2.set(ent2)
+
+
+def check_len(ent1, ent2):
+    len_Ent1 = len(ent1)
+    len_Ent2 = len(ent2)
+    if len_Ent1 == 0 or len_Ent2 == 0:
+        return False
+    set_len(len_Ent1, len_Ent2)
+    return True
 
 # Coloca si es correcto o incorrecta la validacion de la cadena
 def set_validation(results):
     val_rest1.set(map_result(results[0]))
     val_rest2.set(map_result(results[1]))
     
-# Verifica si el alfabeto esta vacio
-def alphabet_isNot_empty(text=''):
-    if len(text) == 0: 
-        print('Vacio')
-        return False
-    return True
-    
 def check_inputs():
     # Se obtienen los datos de los inputs
-    alphabet = Ent_Alph_Imp.get()
-    Ent1 = Ent_Val1.get().strip()
-    Ent2 = Ent_Val2.get().strip()
+    Ent1 = Ent_Val1.get()
+    Ent2 = Ent_Val2.get()
 
-    # Funcion que define la longitud de las cadenas
-    set_len(Ent1, Ent2)
-
-    # Verifica si el input del alfabeto no esta vacio
-    if alphabet_isNot_empty(alphabet):
+    # Verifica si se han introducido cadenas para validar
+    if check_len(Ent1, Ent2):
         # Invoca la funcion que valida si la cadena coincide con el alfabeto y retorna el resultado
-        results = validate(alphabet, Ent1, Ent2)
+        results = validate(Ent1, Ent2)
         # Funcion que muestra los resultados en la interfaz
         set_validation(results)
+    else:
+        print('Sin cadenas no funciono')
 
 BtmValidate.config(command=check_inputs)
 
