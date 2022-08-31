@@ -1,5 +1,7 @@
 from tkinter import *
-from operations import validate, ALPHABET
+from tkinter import messagebox, Radiobutton
+from operations import validate, concatenate, ALPHABET
+
 
 # Configurations
 root = Tk()
@@ -12,10 +14,13 @@ StrV_ent1 = StringVar()
 StrV_ent2 = StringVar()
 alphabey = StringVar()
 alphabey.set(','.join(ALPHABET))
+StrV_ConcRuslt = StringVar()
+
+conc_Opt = IntVar()
 # Components
 Lb_Title = Label(root, text="Cadenas y simbolos", font='Tahoma, 16')
 Fr_Alph_Inp = Frame(root)
-Lb_Alph_Inp = Label(Fr_Alph_Inp, text="Introduce un alfabeto (sepado por comas)")
+Lb_Alph_Inp = Label(Fr_Alph_Inp, text="Alfabeto utilizado")
 Ent_Alph_Imp = Entry(Fr_Alph_Inp, state='disabled', textvariable=alphabey)
 
 
@@ -34,6 +39,15 @@ Fr_len = Frame(Fr_Val)
 Lb_lenMsg = Label(Fr_len, text='Caracteres')
 Lb_len_rest1 = Label(Fr_len, textvariable=StrV_ent1)
 Lb_len_rest2 = Label(Fr_len, textvariable=StrV_ent2)
+
+Fr_Conc = Frame(root)
+Rb_ab = Radiobutton(Fr_Conc, text='AB',variable=conc_Opt, value=0)
+Rb_ba = Radiobutton(Fr_Conc, text='BA',variable=conc_Opt, value=1)
+Rb_alb = Radiobutton(Fr_Conc, text='AlB',variable=conc_Opt, value=2)
+Rb_bla = Radiobutton(Fr_Conc, text='BlA',variable=conc_Opt, value=3)
+Btm_Conc = Button(Fr_Conc, text='Concatenar')
+
+Lb_conctResult = Label(root, textvariable=StrV_ConcRuslt)
 
 BtmValidate = Button(root,text='Validar')
 
@@ -59,6 +73,14 @@ Lb_ValMsg.pack(expand=True)
 Lb_Result1.pack(expand=True)
 Lb_Result2.pack(expand=True)
 
+Fr_Conc.pack()
+Rb_ab.pack(side='left')
+Rb_ba.pack(side='left')
+Rb_alb.pack(side='left')
+Rb_bla.pack(side='left')
+Btm_Conc.pack(side='left')
+
+Lb_conctResult.pack()
 BtmValidate.pack(side='bottom')
 
 ######################################################################
@@ -101,10 +123,25 @@ def check_inputs():
         # Funcion que muestra los resultados en la interfaz
         set_validation(results)
     else:
-        print('Sin cadenas no funciono')
+        messagebox.showwarning('Aviso', 'Introduce cadenas válidas')        
+
+
+def conc_result():
+    # Obtener la opcion de concatenar
+    concResult = ''
+    a = Ent_Val1.get()
+    b = Ent_Val2.get()
+    operation = {
+        0: concatenate(a,b,False),
+        1: concatenate(b,a,False),
+        2: concatenate(a,b,True),
+        3: concatenate(b,a,True)
+    }
+    StrV_ConcRuslt.set(operation.get(conc_Opt.get()))
+
 
 BtmValidate.config(command=check_inputs)
-
+Btm_Conc.config(command=conc_result)
 root.mainloop()
 
 

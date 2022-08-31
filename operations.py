@@ -19,8 +19,15 @@ def validate(ent1='', ent2=''):
     # Retorna el valor de la lista
     return ValidationList
 
+
+def concatenate(str_1='', str_2='', lmd = False):
+    if lmd:
+        return f'{str_1} {str_2}'
+    return str_1 + str_2
+
 def main():
-    print(validate('', ''))
+    # print(validate('', ''))
+    print(concatenate('hola', 'mundo', True))
 
 if __name__ == '__main__':
     main()
