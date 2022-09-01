@@ -188,7 +188,7 @@ def exp_result():
         messagebox.showwarning('Alerta', 'Introduce un valor valido')
         return
     exp = int(Ent_Exp.get())
-    if exp > 10 or exp <= 0: 
+    if exp > 10 or exp < 0: 
         messagebox.showinfo('Info', 'Valor fuera de rango')
         return
     # Muestra los resultados
