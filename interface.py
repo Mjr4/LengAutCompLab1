@@ -50,7 +50,7 @@ Rb_ab = Radiobutton(Fr_ConctImpt, text='AB',variable=conc_Opt, value=0)
 Rb_ba = Radiobutton(Fr_ConctImpt, text='BA',variable=conc_Opt, value=1)
 Rb_alb = Radiobutton(Fr_ConctImpt, text='AlB',variable=conc_Opt, value=2)
 Rb_bla = Radiobutton(Fr_ConctImpt, text='BlA',variable=conc_Opt, value=3)
-Btm_Conc = Button(Fr_ConctImpt, text='Concatenar')
+Btm_Conc = Button(Fr_ConctImpt, text='Concatenar', state=DISABLED)
 
 Lb_conctResult = Label(Fr_Conc, textvariable=StrV_ReslConc, relief=SUNKEN)
 
@@ -58,7 +58,7 @@ Fr_CalcExp = Frame(root)
 Fr_CalcExpInp = Frame(Fr_CalcExp)
 Lb_ExpMesag = Label(Fr_CalcExpInp, text='Introduce un exponente para calcular la potencia')
 Ent_Exp = Entry(Fr_CalcExpInp)
-Btm_CalcExp = Button(Fr_CalcExpInp, text='Calcular')
+Btm_CalcExp = Button(Fr_CalcExpInp, text='Calcular', state=DISABLED)
 
 Lb_Val1Exp = Label(Fr_CalcExp, textvariable=StrV_ReslValExp1, relief=SUNKEN)
 Lb_Val2Exp = Label(Fr_CalcExp, textvariable=StrV_ReslValExp2, relief=SUNKEN)
@@ -131,7 +131,22 @@ def check_len(ent1, ent2):
 def set_validation(results):
     StrV_ReslVal1.set(map_result(results[0]))
     StrV_ReslVal2.set(map_result(results[1]))
-    
+
+# Activa o desactiva botones
+def act_buttons(results):
+    if results[0] == True and results[1] == True:
+        Btm_CalcExp.config(state=ACTIVE)
+        Btm_Conc.config(state=ACTIVE)
+    else:
+        Btm_CalcExp.config(state=DISABLED)
+        Btm_Conc.config(state=DISABLED)
+
+def clr_labels():
+    # Limpia los labels
+    StrV_ReslConc.set('')
+    StrV_ReslValExp1.set('')
+    StrV_ReslValExp2.set('')
+
 def check_inputs():
     # Se obtienen los datos de los inputs
     Ent1 = Ent_Val1.get()
@@ -145,6 +160,8 @@ def check_inputs():
         results = validate(Ent1, Ent2)
         # Funcion que muestra los resultados en la interfaz
         set_validation(results)
+        act_buttons(results)
+        clr_labels()
     else:
         messagebox.showwarning('Aviso', 'Introduce cadenas válidas')        
 
@@ -165,7 +182,7 @@ def conc_result():
 
 # Potencia de cadenas
 def exp_result():
-    # Obtiene el exponente
+    # Obtiene el exponente y verifica si es valido
     exp = Ent_Exp.get()
     if not exp.isnumeric() and not len(exp)>0:
         messagebox.showwarning('Alerta', 'Introduce un valor valido')
@@ -182,5 +199,3 @@ Btm_validate.config(command=check_inputs)
 Btm_Conc.config(command=conc_result)
 Btm_CalcExp.config(command=exp_result)
 root.mainloop()
-
-
